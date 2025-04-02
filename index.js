@@ -4,6 +4,7 @@ import { config } from './config/index.js';
 import { hub } from './src/hub/index.js';
 
 const app = express();
+app.use(cors());
 app.use(json());
 app.use('/storage', express.static('storage'));
 
