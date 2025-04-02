@@ -5,7 +5,7 @@ import { randomBytes } from 'crypto';
 import { config } from '../../config/index.js';
 
 export const store = async (req, res) => {
-  const upload = multer({ dest: config.storage }).single('file');
+  const upload = multer({ dest: config.app.storage }).single('file');
 
   upload(req, res, async (err) => {
     try {
@@ -16,10 +16,10 @@ export const store = async (req, res) => {
       const name = randomBytes(32).toString('hex');
       const fileName = `${name}${extension}`;
 
-      const directory = `${config.storage}${fileName}`;
+      const directory = `${config.app.storage}${fileName}`;
       fs.renameSync(req.file.path, directory);
       const domain = `${req.protocol}://${req.get('host')}/`;
-      const url = `${domain}${config.storage}${fileName}`;
+      const url = `${domain}${config.app.storage}${fileName}`;
 
       const data = {
         url,
